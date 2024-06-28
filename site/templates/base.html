@@ -213,18 +213,25 @@
                 <form method="post" class="search-form">
                     <div class="mb-3">
                         <label for="search" class="form-label">📝 Введите слово для поиска:</label>
-                        <input type="text" class="form-control" id="search" name="search" required placeholder="Например: любовь, дуэль, бал...">
+                        <input type="text" class="form-control" id="search" name="search" required placeholder="Например: любовь, дуэль, бал..." value="{{ search_query }}">
                         <div class="container">
                             <label for="index" class="form-label">🔍 Выберите тип поиска:</label>
                             <select name="index" id="index" class="form-control" required>
                                 <option value="">--Пожалуйста, выберите опцию--</option>
-                                <option value="index_label">Поиск по лэйблам</option>
-                                <option value="index_sents">Поиск по предложению</option>
+                                <option value="index_label" {% if selected_index == 'index_label' %}selected{% endif %}>Поиск по лэйблам</option>
+                                <option value="index_sents" {% if selected_index == 'index_sents' %}selected{% endif %}>Поиск по предложению</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Начать поиск</button>
                     </div>
                 </form>
+                
+                {% if search_query %}
+                    <div class="alert alert-info">
+                        Вы искали: <strong> "{{ search_query }}"</strong>.
+                    </div>
+                {% endif %}
+                
                 <div class="results">
                     <h3>📜 Результаты поиска</h3>
                     {% for item in res %}
