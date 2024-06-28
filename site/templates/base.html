@@ -1,78 +1,248 @@
 <!DOCTYPE html> 
 <html lang="ru">          
     <head>   
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Поиск по корпусу пересказов "Евгения Онегина"</title>
         <style>
+            :root {
+                --main-color: #8D6E63;
+                --bg-color: #FFF5E6;
+                --text-color: #3E2723;
+            }
+            
+            body {
+                font-family: 'Playfair Display', serif;
+                background-color: var(--bg-color);
+                background-image: url('https://example.com/path/to/vintage-paper-texture.jpg');
+                background-attachment: fixed;
+                color: var(--text-color);
+                margin: 0;
+                padding: 0;
+                font-size: 15px;
+            }
+            
+            header {
+                background-color: var(--main-color);
+                background-image: url('https://example.com/path/to/quill-pen-ink.jpg');
+                background-blend-mode: overlay;
+                color: var(--bg-color);
+                padding: 30px 0;
+                text-align: center;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            
+            h1 {
+                font-family: 'Gabriola', 'Playfair Display', serif;
+                font-size: 3.5em;
+                margin: 0;
+            }
+            
             .page {
                 display: flex;
+                justify-content: center;
+                padding: 30px;
             }
             
             main {
-                width: 80%;
-            }       
-
-            .container {
-                background-color: #F5F5DC;
-                margin: 10px;
-                border-radius: 20px;
-                padding: 10px;
-                width: max-content;
+                width: 90%;
+                max-width: 1400px;
+                background-color: rgba(255, 255, 255, 0.9);
+                border: 2px solid var(--main-color);
+                border-radius: 15px;
+                padding: 40px;
+                box-shadow: 0 0 20px rgba(0,0,0,0.1);
+                transition: all 0.3s ease;
+            }
+            
+            main:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+            }
+            
+            .form-control, .btn-primary {
+                font-family: 'Playfair Display', serif;
+                width: 100%;
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 5px;
+                border: 1px solid var(--main-color);
+                transition: all 0.3s ease;
+                font-size: 18px;
+            }
+            
+            .form-control:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px var(--main-color);
+            }
+            
+            .btn-primary {
+                background-color: var(--main-color);
+                color: var(--bg-color);
+                border: none;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 20px;
+            }
+            
+            .btn-primary:hover {
+                background-color: #A1887F;
+                transform: scale(1.05);
+            }
+            
+            select {
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238D6E63' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 15px center;
+                padding-right: 40px;
+            }
+            
+            table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                border: 2px solid var(--main-color);
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 0 10px rgba(141, 110, 99, 0.1);
+                margin-top: 30px;
+                transition: all 0.3s ease;
+            }
+            
+            table:hover {
+                transform: scale(1.01);
+                box-shadow: 0 5px 15px rgba(141, 110, 99, 0.2);
+            }
+            
+            th, td {
+                padding: 15px;
+                text-align: left;
+                border-bottom: 1px solid var(--main-color);
+                border-right: 1px solid var(--main-color);
+            }
+            
+            th:last-child, td:last-child {
+                border-right: none;
+            }
+            
+            th {
+                background-color: var(--main-color);
+                color: var(--bg-color);
+                font-size: 20px;
+            }
+            
+            tr:last-child td {
+                border-bottom: none;
+            }
+            
+            .result-item {
+                transition: all 0.3s ease;
+                margin-bottom: 30px;
+            }
+            
+            .result-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .results {
+                animation: fadeIn 1s ease-in-out;
+            }
+            
+            .form-label {
+                display: block;
+                margin-bottom: 10px;
+                font-weight: bold;
+                color: var(--main-color);
+                font-size: 20px;
+            }
+            
+            h3 {
+                font-size: 28px;
+                color: var(--main-color);
+                margin-top: 40px;
             }
 
-            tr {
-                display: grid; 
-                grid-template-columns: 2fr 1.5fr 2fr;
+            .pushkin-profile {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                perspective: 1000px;
+                z-index: 1000;
+                background-color: white;
+                border: 2px solid var(--main-color);
+                border-radius: 50%;
+                padding: 5px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
             }
 
-        </style>    
+            .pushkin-profile img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                animation: flip 5s linear infinite;
+            }
+
+            @keyframes flip {
+                0%, 100% {
+                    transform: rotateY(0deg);
+                }
+                50% {
+                    transform: rotateY(180deg);
+                }
+            }
+        </style>       
     </head>
     <body>       
         <header>
             <h1>Поиск по корпусу пересказов "Евгения Онегина"</h1>
         </header>
-        <div class='page'>
+        <div class="pushkin-profile">
+            <img src="pushkin.png" alt="Профиль А.С. Пушкина">
+        </div>
+        <div class="page">
             <main>
-                <form method="post">
+                <form method="post" class="search-form">
                     <div class="mb-3">
-                        <label for="search" class="form-label" style="padding-left: 20px;">Слово:</label>
-                        <input type="text" class="form-control" id="search" name="search" required>
-                        <br>
+                        <label for="search" class="form-label">📝 Введите слово для поиска:</label>
+                        <input type="text" class="form-control" id="search" name="search" required placeholder="Например: любовь, дуэль, бал...">
                         <div class="container">
-                            <label for="index" class="form-label">Индекс:</label>
+                            <label for="index" class="form-label">🔍 Выберите тип поиска:</label>
                             <select name="index" id="index" class="form-control" required>
-                                <option value="">--Please choose an option--</option>
+                                <option value="">--Пожалуйста, выберите опцию--</option>
                                 <option value="index_label">Поиск по лэйблам</option>
                                 <option value="index_sents">Поиск по предложению</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="margin-left: 20px;">Искать</button>
+                        <button type="submit" class="btn btn-primary">Начать поиск</button>
                     </div>
                 </form>
-                <br>
-                <div><h3>Результаты поиска</h3></div>
                 <div class="results">
+                    <h3>📜 Результаты поиска</h3>
                     {% for item in res %}
-                        <table>
-                            <tr>
-                                <td></td>
-                                <th>{{item['_source']['span']}} — <i>{{item['_source']['label_name']}}</i></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>{{item['_source']['left_context']}}</td>
-                                <th>{{item['_source']['sentence']}}</td>
-                                <td >{{item['_source']['right_context']}}</td>
-                            </tr>
-                        </table>
+                        <div class="result-item">
+                            <table>
+                                <tr>
+                                    <th colspan="3">{{item['_source']['span']}} — <i>{{item['_source']['label_name']}}</i></th>
+                                </tr>
+                                <tr>
+                                    <td width="30%">{{item['_source']['left_context']}}</td>
+                                    <td width="40%"><strong>{{item['_source']['sentence']}}</strong></td>
+                                    <td width="30%">{{item['_source']['right_context']}}</td>
+                                </tr>
+                            </table>
+                        </div>
                     {% endfor %}
                 </div>
             </main>
         </div>
-    <footer>
-    </footer>
-  </body>
-</html> 
+    </body>
+</html>
