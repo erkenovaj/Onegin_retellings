@@ -3,7 +3,7 @@ from flask import Flask, render_template, request
 import json
 from getpass import getpass
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 client = Elasticsearch(
   "https://f935605f13ee463382d108587978eec1.us-central1.gcp.cloud.es.io:443",
