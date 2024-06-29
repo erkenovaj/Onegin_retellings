@@ -199,6 +199,24 @@
                     transform: rotateY(180deg);
                 }
             }
+            .search-info {
+                background-color: rgba(245, 229, 230, 0.8); 
+                border-left: 5px solid var(--main-color); 
+                padding: 20px;
+                margin-bottom: 30px;
+                border-radius: 0 10px 10px 0;  
+            }
+
+            .search-info h4 {
+                font-size: 24px;
+                margin-bottom: 10px;
+                color: var(--main-color);
+            }
+
+            .search-info p {
+                font-size: 18px;
+                line-height: 1.4;
+            }
         </style>       
     </head>
     <body>       
@@ -227,9 +245,10 @@
                 </form>
                 
                 {% if search_query %}
-                    <div class="alert alert-info">
-                        Вы искали: <strong> "{{ search_query }}"</strong>.
-                    </div>
+                    <aside class="search-info">
+                        <h4>🔎 Вы искали:</h4>
+                        <p><strong>"{{ search_query }}"</strong></p>
+                    </aside>
                 {% endif %}
                 
                 <div class="results">
